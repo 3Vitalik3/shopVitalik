@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Магазин</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-store"></i>
+                    <span>Магазин</span>
+                </a>
+                <nav class="nav">
+                    <a href="../index.html" class="nav-link">Главная</a>
+                    <a href="catalog.html" class="nav-link">Каталог</a>
+                    <a href="cart.html" class="nav-link cart-link active">
+                        <i class="fas fa-shopping-cart"></i>
+                        Корзина
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </nav>
+                <div class="header-actions">
+                    <div class="user-menu" id="user-menu">
+                        <button class="btn btn-outline" id="login-btn">
+                            <i class="fas fa-user"></i>
+                            Войти
+                        </button>
+                    </div>
+                    <div class="user-logged" id="user-logged" style="display: none;">
+                        <div class="user-dropdown">
+                            <button class="user-btn" id="user-btn">
+                                <i class="fas fa-user-circle"></i>
+                                <span id="user-name">Пользователь</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    Личный кабинет
+                                </a>
+                                <a href="orders.html" class="dropdown-item">
+                                    <i class="fas fa-box"></i>
+                                    Мои заказы
+                                </a>
+                                <a href="admin.html" class="dropdown-item admin-only" id="admin-link" style="display: none;">
+                                    <i class="fas fa-cog"></i>
+                                    Админ панель
+                                </a>
+                                <hr class="dropdown-divider">
+                                <button class="dropdown-item logout-btn" id="logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Выйти
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Корзина</h1>
+            <div class="breadcrumb">
+                <a href="../index.html">Главная</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Корзина</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <!-- Empty Cart Message -->
+            <div class="cart-empty" id="cart-empty" style="display: none;">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Ваша корзина пуста</h3>
+                <p>Добавьте товары из каталога, чтобы оформить заказ</p>
+                <a href="catalog.html" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i>
+                    Перейти в каталог
+                </a>
+            </div>
+
+            <!-- Cart Content -->
+            <div class="cart-container" id="cart-content" style="display: none;">
+                <div class="cart-items">
+                    <h2>Товары в корзине (<span id="items-count">0</span>)</h2>
+                    <div id="cart-items-list">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div class="cart-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button class="btn btn-outline" onclick="clearCart(); renderCartItems();">
+                            <i class="fas fa-trash"></i>
+                            Очистить корзину
+                        </button>
+                        <a href="catalog.html" class="btn btn-outline">
+                            <i class="fas fa-arrow-left"></i>
+                            Продолжить покупки
+                        </a>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Итого</h2>
+                    <div class="summary-row">
+                        <span>Товары:</span>
+                        <span id="cart-subtotal">0 ₽</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка:</span>
+                        <span id="cart-shipping">0 ₽</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>К оплате:</span>
+                        <span id="cart-total">0 ₽</span>
+                    </div>
+                    
+                    <div class="promo-code">
+                        <input type="text" placeholder="Промокод" id="promo-input">
+                        <button class="btn btn-outline btn-block" onclick="applyPromo()">
+                            Применить промокод
+                        </button>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block btn-lg" onclick="checkout()">
+                        <i class="fas fa-credit-card"></i>
+                        Оформить заказ
+                    </button>
+                    
+                    <p style="text-align: center; margin-top: 15px; color: var(--gray-color); font-size: 0.9rem;">
+                        <i class="fas fa-lock"></i>
+                        Безопасная оплата
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Магазин</h4>
+                    <p>Ваш надежный интернет-магазин с широким ассортиментом товаров.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="../index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="cart.html">Корзина</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@shop.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Магазин. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2 id="modal-title">Вход</h2>
+            </div>
+            <div class="modal-body">
+                <form id="auth-form">
+                    <div class="form-group" id="name-group" style="display: none;">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Введите email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="auth-submit">Войти</button>
+                </form>
+                <div class="modal-footer">
+                    <p id="auth-switch">
+                        Нет аккаунта? <a href="#" id="switch-to-register">Зарегистрироваться</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize cart page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCartItems();
+        });
+        
+        // Apply promo code
+        function applyPromo() {
+            const promoInput = document.getElementById('promo-input');
+            const code = promoInput.value.trim().toUpperCase();
+            
+            if (code === 'SALE10') {
+                showToast('Промокод применен! Скидка 10%', 'success');
+                // In real app, apply discount to cart
+            } else if (code === '') {
+                showToast('Введите промокод', 'error');
+            } else {
+                showToast('Недействительный промокод', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
