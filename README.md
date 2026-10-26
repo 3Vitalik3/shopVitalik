@@ -44,5 +44,6 @@ java -jar target/online-shop-1.0.0.jar
 java -jar target/online-shop-1.0.0.jar --server.port=18080 --spring.datasource.url=jdbc:h2:mem:shopcheck
 python scripts/smoke_test.py
 ```
+Проверяется каталог, разграничение ролей, восстановление корзины после повторного входа, оформление заказа и управление товарами администратором.
+## Видео работы https://disk.yandex.ru/d/V2GQY5fhVsT7AQ
 
-Проверяются каталог, разграничение ролей, восстановление корзины после повторного входа, оформление заказа и управление товарами администратором.
